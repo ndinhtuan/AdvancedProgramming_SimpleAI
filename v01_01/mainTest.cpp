@@ -5,11 +5,14 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
+#include <fstream>
 
-#include "main.h"
 #include <string>
 
-using std::string;
+using std::string, std::ifstream;
+using namespace std;
+
+
 
 struct TestStruct
 {
@@ -33,6 +36,12 @@ bool verifyFilterWordsByLen(int wordLen, const vector<string>& vocabulary, vecto
     myAnswer = filterWordsByLen(wordLen, vocabulary);
     return myAnswer == answer;
 }
+
+bool verifyFilterWordsByMask(const vector<string>& words, const string& mask, char ch, vector<string> answer){
+    myAnswer = filterWordsByMask(words,mask,ch);
+    return myAnswer == answer;
+}
+
 bool verifyFindBestChar(const vector<string>& candidateWords, const set<char>& selectedChars, char answer){
     char myAnswer = findBestChar(candidateWords, selectedChars);
     return myAnswer == answer;
@@ -49,10 +58,6 @@ bool verifyIsCorrectChar(char ch, const string& mask, bool answer){
 bool verifyIsWholeWord(const string& mask, bool answer){
     myAnswer = isWholeWord(mask);
     return myAnswer == answer;
-}
-
-bool verifyFilterWordsByMask(const vector<string>& words, const string& mask, char ch, vector<string> answer){
-    myAnswer = filterWordsByMask(words,mask,ch);
 }
 
 
@@ -167,6 +172,72 @@ class Test : public CPPUNIT_NS::TestCase
             },
         };
         runTestLoop(checkIsCharInWord, testSize);
+      }
+
+      
+    void testFilterWordsByLen(void) {
+        string wordFilePath = "data/hangman_dictionary.txt";
+        vector<string> vocabulary = readWordListFromFile(wordFilePath);
+        const int testSize = 5;
+        int wordLen_arr[testSize];
+        std::string sharedName = "\n[checkFilterWordsByLen test] ";
+        vector<vector<string>>  candidateWords_arr;
+        for(int i=1;i <= testSize;i++){
+            vector<string> newWords;
+            string myText;
+            int wordLen = 0;
+            // Read from the text file
+            ifstream MyReadFile("/test_data/test_filter_len"+std::to_string(i)+".txt");
+            bool is_len = true;
+            while (getline (MyReadFile, myText)) {
+              // Output the text from the file
+                if(is_len){
+                    wordLen = std::stoi(myText);
+                    is_len = false;
+                }
+                else{
+                    newWords.push_back(myText);
+                }
+            }
+            MyReadFile.close();
+            wordLen_arr[i-1] = wordLen;
+            candidateWords_arr.push_back(newWords);
+        }
+        TestStruct checkFilterWordsByLen[testSize]  = 
+        {
+            {
+                sharedName + "test normal 1", 
+                verifyFilterWordsByLen(wordLen_arr[0], vocabulary, candidateWords_arr[0]), 
+                true,
+                "Test case failed, Please check the candidate words with respect to word length\n"
+            },
+            {
+                sharedName + "test normal 1", 
+                verifyFilterWordsByLen(wordLen_arr[1], vocabulary, candidateWords_arr[1]), 
+                true,
+                "Test case failed, Please check the candidate words with respect to word length\n"
+            },
+            {
+                sharedName + "test normal 1", 
+                verifyFilterWordsByLen(wordLen_arr[2], vocabulary, candidateWords_arr[2]), 
+                true,
+                "Test case failed, Please check the candidate words with respect to word length\n"
+            },
+            {
+                sharedName + "test normal 1", 
+                verifyFilterWordsByLen(wordLen_arr[3], vocabulary, candidateWords_arr[3]), 
+                true,
+                "Test case failed, Please check the candidate words with respect to word length\n"
+            },
+            {
+                sharedName + "test normal 1", 
+                verifyFilterWordsByLen(wordLen_arr[4], vocabulary, candidateWords_arr[4]), 
+                true,
+                "Test case failed, Please check the candidate words with respect to word length\n"
+            },
+            
+        };
+        runTestLoop(checkFilterWordsByLen, testSize);
       }
 
       

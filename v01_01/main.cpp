@@ -24,7 +24,7 @@
 #include <vector>
 #include <map>
 #include <set>
-
+ 
 #include "util.h"
 
 using namespace std;
@@ -59,6 +59,7 @@ int main()
     int wordLen = readWordLen();
 
     vector<string> candidateWords = filterWordsByLen(wordLen, vocabulary);
+    //save_filter(1, wordLen, candidateWords, "-", '-');
     set<char> selectedChars;
     int incorrectGuess = 0;
     string finalMessage = "";
@@ -84,6 +85,7 @@ int main()
                 break;
             } else {
                 candidateWords = filterWordsByMask(candidateWords, responsedMask, nextChar);
+                //save_filter(0, 0, candidateWords, responsedMask, nextChar);
                 //cout << "Size of candidates: " << candidateWords.size() << endl;
                 //cout << candidateWords[0] << " " << candidateWords[candidateWords.size()-1] << endl;
             }
