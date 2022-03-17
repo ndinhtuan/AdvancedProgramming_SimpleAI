@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include <algorithm>
 using namespace std;
 
 bool a2zWord(string word)
