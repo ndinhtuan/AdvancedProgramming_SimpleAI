@@ -263,13 +263,13 @@ class Test : public CPPUNIT_NS::TestCase
             {
                 sharedName + "test normal 4", 
                 verifyIsCorrectChar('t', "--rd", false), 
-                false,
+                true,
                 "Character 't' not exists in string \"--rd\""
             },
             {
                 sharedName + "test normal 5", 
                 verifyIsCorrectChar('w', "---d", false), 
-                false,
+                true,
                 "Character 'w' exists in string \"---d\"\n"
             },
         };
@@ -290,7 +290,7 @@ class Test : public CPPUNIT_NS::TestCase
             {
                 sharedName + "test normal 2", 
                 verifyIsWholeWord("mo-", false), 
-                false,
+                true,
                 "mo- is not whole word\n"
             },
             {
@@ -308,7 +308,7 @@ class Test : public CPPUNIT_NS::TestCase
             {
                 sharedName + "test normal 5", 
                 verifyIsWholeWord("anim--", false), 
-                false,
+                true,
                 "aim-- is not whold word"
             },
         };
