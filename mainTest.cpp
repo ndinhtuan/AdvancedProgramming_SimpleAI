@@ -33,15 +33,13 @@ bool verifyIsCharInWord(const char ch, const string& word){
 
 
 bool verifyFilterWordsByLen(int wordLen, const vector<string>& vocabulary, vector<string> answer){
-    //int myAnswer = filterWordsByLen(wordLen, vocabulary);
-    //return myAnswer == answer;
-    return true;
+    vector<string> myAnswer = filterWordsByLen(wordLen, vocabulary);
+    return myAnswer == answer;
 }
 
 bool verifyFilterWordsByMask(const vector<string>& words, const string& mask, char ch, vector<string> answer){
-    //int myAnswer = filterWordsByMask(words,mask,ch);
-    //return myAnswer == answer;
-    return true;
+    vector<string> myAnswer  = filterWordsByMask(words,mask,ch);
+    return myAnswer == answer;
 }
 
 bool verifyFindBestChar(const vector<string>& candidateWords, const set<char>& selectedChars, char answer){
@@ -83,9 +81,13 @@ void runTestLoop(TestStruct testCases[], int testSize){
 class Test : public CPPUNIT_NS::TestCase
 {
     CPPUNIT_TEST_SUITE(Test);
+    CPPUNIT_TEST(testGenerateRandomNumber);
+    CPPUNIT_TEST(testIsCharInWord);
     CPPUNIT_TEST(testFindBestChar);
     CPPUNIT_TEST(testIsWholeWord);
     CPPUNIT_TEST(testVerifyIsCorrectChar);
+    CPPUNIT_TEST(testFilterWordsByLen);
+    CPPUNIT_TEST(testFilterWordsByMask);
     CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -209,25 +211,25 @@ class Test : public CPPUNIT_NS::TestCase
                 "Test case failed, Please check the candidate words with respect to word length\n"
             },
             {
-                sharedName + "test normal 1", 
+                sharedName + "test normal 2", 
                 verifyFilterWordsByLen(wordLen_arr[1], vocabulary, candidateWords_arr[1]), 
                 true,
                 "Test case failed, Please check the candidate words with respect to word length\n"
             },
             {
-                sharedName + "test normal 1", 
+                sharedName + "test normal 3", 
                 verifyFilterWordsByLen(wordLen_arr[2], vocabulary, candidateWords_arr[2]), 
                 true,
                 "Test case failed, Please check the candidate words with respect to word length\n"
             },
             {
-                sharedName + "test normal 1", 
+                sharedName + "test normal 4", 
                 verifyFilterWordsByLen(wordLen_arr[3], vocabulary, candidateWords_arr[3]), 
                 true,
                 "Test case failed, Please check the candidate words with respect to word length\n"
             },
             {
-                sharedName + "test normal 1", 
+                sharedName + "test normal 5", 
                 verifyFilterWordsByLen(wordLen_arr[4], vocabulary, candidateWords_arr[4]), 
                 true,
                 "Test case failed, Please check the candidate words with respect to word length\n"
@@ -235,6 +237,66 @@ class Test : public CPPUNIT_NS::TestCase
             
         };
         runTestLoop(checkFilterWordsByLen, testSize);
+      }
+
+    void testFilterWordsByMask(void) {
+        const int testSize = 5;
+        std::string sharedName = "\n[checkFilterWordsByMask test] ";
+        vector<vector<string>>  candidateWords_arr;
+        vector<vector<string>>  outWords_arr;
+        for(int i=1;i <= testSize;i++){
+            vector<string> inpWords;
+            vector<string> outWords;
+            string myText;
+            // Read from the text file
+            ifstream MyReadFile("/test_data/filterbymask/input_filter_mask"+std::to_string(i)+".txt");
+            ifstream OutReadFile("/test_data/filterbymask/output_filter_mask"+std::to_string(i)+".txt");
+            bool is_len = true;
+            while (getline (MyReadFile, myText)) {
+                inpWords.push_back(myText);
+            }
+            while (getline (OutReadFile, myText)) {
+                outWords.push_back(myText);
+            }
+            MyReadFile.close();
+            candidateWords_arr.push_back(inpWords);
+            outWords_arr.push_back(outWords);
+        }
+        TestStruct checkFilterWordsByMask[testSize]  = 
+        {
+            {
+                sharedName + "test normal 1", 
+                verifyFilterWordsByMask(candidateWords_arr[0], "-a-", 'a', outWords_arr[0]), 
+                true,
+                "Test case failed, Please check the input candidate words with respect to output\n"
+            },
+            {
+                sharedName + "test normal 2", 
+                verifyFilterWordsByMask(candidateWords_arr[1], "pa-", 'p', outWords_arr[1]), 
+                true,
+                "Test case failed, Please check the input candidate words with respect to output\n"
+            },
+            {
+                sharedName + "test normal 3", 
+                verifyFilterWordsByMask(candidateWords_arr[2], "-ee-", 'e', outWords_arr[2]), 
+                true,
+                "Test case failed, Please check the input candidate words with respect to output\n"
+            },
+            {
+                sharedName + "test normal 4", 
+                verifyFilterWordsByMask(candidateWords_arr[3], "dee-", 'd', outWords_arr[3]), 
+                true,
+                "Test case failed, Please check the input candidate words with respect to output\n"
+            },
+            {
+                sharedName + "test normal 5", 
+                verifyFilterWordsByMask(candidateWords_arr[4], "-ear", 'r', outWords_arr[4]), 
+                true,
+                "Test case failed, Please check the input candidate words with respect to output\n"
+            },
+            
+        };
+        runTestLoop(checkFilterWordsByMask, testSize);
       }
 
     void testVerifyIsCorrectChar(void) {
