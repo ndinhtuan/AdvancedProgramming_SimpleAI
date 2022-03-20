@@ -7,6 +7,7 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <fstream>
 #include "simpleai.h"
+#include "util.h"
 #include <string>
 
 using std::string, std::ifstream;
