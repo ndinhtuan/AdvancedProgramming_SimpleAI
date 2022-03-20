@@ -77,27 +77,10 @@ int main()
 
     //cout << "Max guess: " << incorrectGuess << " Word-len: " << wordLen << " Word num: " << candidateWords.size() << endl;
     
-    int idTestCase = 0;
     while (true) {
         // B2
-        idTestCase += 1;
-        string file_name_candidate_words = "test_data/find_best_char/candidate_words/" + to_string(idTestCase) + ".txt";
-        string file_name_seletected_chars = "test_data/find_best_char/selected_chars/" + to_string(idTestCase) + ".txt";
-        string file_name_next_char = "test_data/find_best_char/next_char/" + to_string(idTestCase) + ".txt";
-
-        //ofstream file_candidate_words; file_candidate_words.open(file_name_candidate_words);
-        //ofstream file_seletected_chars; file_seletected_chars.open(file_name_seletected_chars);
-        //ofstream file_next_char; file_next_char.open(file_name_next_char);
 
         char nextChar = findBestChar(candidateWords, selectedChars);
-        //printVector(candidateWords);
-        //printVector(candidateWords, file_candidate_words); 
-        //printSet(selectedChars, file_seletected_chars);
-        //printChar(nextChar, file_next_char);
-
-        //file_candidate_words.close();
-        //file_seletected_chars.close();
-        //file_next_char.close();
 
         if (nextChar == 0) {
             finalMessage =  "There is something wrong. I quit :|";
@@ -119,8 +102,6 @@ int main()
                 save_filter(1,candidateWords, responsedMask, nextChar);
                 candidateWords = filterWordsByMask(candidateWords, responsedMask, nextChar);
                 save_filter(0,candidateWords, responsedMask, nextChar);
-                //cout << "Size of candidates: " << candidateWords.size() << endl;
-                //cout << candidateWords[0] << " " << candidateWords[candidateWords.size()-1] << endl;
             }
         } else {
             incorrectGuess += 1;        
