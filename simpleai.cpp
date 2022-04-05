@@ -142,7 +142,7 @@ bool isWholeWord(const string& mask)
 ***/
 bool wordConformToMask(const string& word, const string& mask, char ch) 
 {
-     bool answer;
+    bool answer;
     //Write your code here
     return answer;
 }
@@ -161,6 +161,7 @@ bool wordConformToMask(const string& word, const string& mask, char ch)
 ***/
 vector<string> filterWordsByMask(const vector<string>& words, const string& mask, char ch)
 {
+    bool answer;
     //Write your code here
     return answer;
 }
